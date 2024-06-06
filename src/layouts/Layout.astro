@@ -1,9 +1,15 @@
 ---
+import Footer from '../components/Footer.astro';
+import Hamburger from '../components/Hamburger.astro';
+import Navigation from '../components/Navigation.astro';
+
+import '../styles/global.css';
+
 interface Props {
-	title: string;
+	pageTitle: string;
 }
 
-const { title } = Astro.props;
+const { pageTitle } = Astro.props;
 ---
 
 <!doctype html>
@@ -12,17 +18,20 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<nav>
-			<a href="/">Home</a>
-			<a href="/about">About</a>
-			<a href="/blog">Blog</a>
-		</nav>
-		<slot />
+		<Hamburger />
+		<Navigation />
+    <h1>{pageTitle}</h1>
+    <slot />
+		<Footer />
+
+		<script>
+			import "../scripts/menu.js";
+		</script>
 	</body>
 </html>
 <style is:global>
