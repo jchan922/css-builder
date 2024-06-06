@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Blog";
 ---
 
-<Layout title="Blog about Astro.">
+<Layout title={pageTitle}>
 	<main>
-		<h1>Blog about <span class="text-gradient">Atlanta</span></h1>
+		<h1 class="text-gradient">{pageTitle}</h1>
 
 		<p>This is where I will post about my journey learning Astro.</p>
 	</main>
