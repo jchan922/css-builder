@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/Footer.astro';
-import Hamburger from '../components/Hamburger.astro';
 import Header from '../components/Header.astro';
 import Navigation from '../components/Navigation.astro';
 
@@ -10,7 +8,6 @@ interface Props {
 	pageTitle: string;
 }
 
-const { pageTitle } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,48 +15,31 @@ const { pageTitle } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<Header />
-    <h1>{pageTitle}</h1>
     <slot />
-		<Footer />
-
-		<script>
-			import "../scripts/menu.js";
-		</script>
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+	:root {}
+
+	* {
+		box-sizing: border-box;
 	}
+
 	html {
 		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+		font-size: 16px;
+		background-color: #0B0C10;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+	body {
+    min-height: 100vh;
+    max-width: 1280px;
+		background-color: #0B0C10;
+		margin: 0 auto;
+		color: #C5C6C7;
 	}
 </style>

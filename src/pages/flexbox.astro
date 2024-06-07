@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import Box from '../components/Box.astro';
+
+const pageTitle = "CSS Flex Box Builder";
+let numBoxes = 1;
+
+---
+
+<Layout pageTitle={pageTitle}>
+	<main id="flexbox-page">
+		<h1>{pageTitle}</h1>
+		<p>Something something about learning Flex Box.</p>
+
+		<button id="add-box-btn">Add box</button>
+		<button id="remove-box-btn">Remove box</button>
+
+		<form>
+			<fieldset>
+				<legend>justify-content:</legend>
+				<input type="radio" id="center" name="justify-content" value="center" />
+				<label for="center">center</label>
+				
+				<input type="radio" id="flex-start" name="justify-content" value="flex-start" />
+				<label for="flex-start">flex-start</label>
+				<input type="radio" id="start" name="justify-content" value="start" />
+				<label for="start">start</label>
+
+				<input type="radio" id="space-between" name="justify-content" value="space-between" />
+				<label for="space-between">space-between</label>
+				<input type="radio" id="space-around" name="justify-content" value="space-around" />
+				<label for="space-around">space-around</label>
+				<input type="radio" id="space-evenly" name="justify-content" value="space-evenly" />
+				<label for="space-evenly">space-evenly</label>
+				
+				<input type="radio" id="flex-end" name="justify-content" value="flex-end" />
+				<label for="flex-end">flex-end</label>
+				<input type="radio" id="end" name="justify-content" value="end" />
+				<label for="end">end</label>
+			</fieldset>
+		</form>
+
+		<div id="stage">
+			<Box />
+		</div>
+
+		<script>
+			import "../scripts/flexbox.js";
+		</script>
+	</main>
+</Layout>
+
+<style lang="scss">
+	main {
+		padding: 1em;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		color: #66FCF1;
+	}
+	
+	p {
+		color: #C5C6C7;
+	}
+
+	#stage {
+		display: flex;
+		gap: 0.75em;
+    width: 100%;
+		min-height: 200px;
+    border: 4px solid #1F2833;
+		padding: 0.5em;
+	}
+
+	.justify-content {
+		&--center { justify-content: center; }
+		&--flex-start { justify-content: flex-start; }
+		&--flex-end { justify-content: flex-end; }
+		&--normal { justify-content: normal; }
+		&--start { justify-content: start; }
+		&--end { justify-content: end; }
+		&--space-between { justify-content: space-between; }
+		&--space-around { justify-content: space-around; }
+		&--space-evenly{ justify-content: space-evenly; }
+	}
+</style>
+
