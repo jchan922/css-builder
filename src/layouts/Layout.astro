@@ -1,6 +1,5 @@
 ---
 import Header from '../components/Header.astro';
-import Navigation from '../components/Navigation.astro';
 
 import '../styles/global.css';
 
@@ -20,6 +19,7 @@ interface Props {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	</head>
 	<body>
+		<Header />
     <slot />
 	</body>
 </html>
