@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 
 import Box from './Box.jsx';
 import InputRadio from './InputRadio.jsx';
