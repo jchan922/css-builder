@@ -7,10 +7,6 @@ import './Stage.scss';
 
 export default function Stage() {
   const [sandboxStyles, setSandboxStyles] = useState({});
-  const [boxCount, setBoxCount] = useState(1);
-  const addBoxBtnClick = () => setBoxCount(boxCount + 1);
-  const removeBoxBtnClick = () => boxCount > 1 && setBoxCount(boxCount - 1);
-
   const onRadioBtnChange = (e) => {
     const { name, value } = e.target;
     const className = `${name}--${value}`;
@@ -20,12 +16,30 @@ export default function Stage() {
       [name]: className,
     }));
   };
-
   const getElSandboxClasses = (obj) => {
     return Object.keys(obj)?.reduce(
       (string, key) => `${string} ${obj[key]}`,
       ''
     );
+  };
+
+  const [boxCount, setBoxCount] = useState(1);
+  const addBoxBtnClick = () => setBoxCount(boxCount + 1);
+  const removeBoxBtnClick = () => boxCount > 1 && setBoxCount(boxCount - 1);
+
+  const onBoxClick = (e) => {
+    const elDrawer = document.getElementById('drawer');
+    const elDrawerBackground = document.getElementById('drawer-background');
+
+    [elDrawerBackground, elDrawer].forEach((el) =>
+      el.classList.contains('hide')
+        ? el.classList.remove('hide')
+        : el.classList.add('hide')
+    );
+
+    document.getElementById('drawer').contains('hide')
+      ? document.getElementById('stage').classList.add('no-pointer')
+      : document.getElementById('stage').classList.remove('no-pointer');
   };
 
   return (
@@ -94,8 +108,26 @@ export default function Stage() {
         }}
       >
         {[...Array(boxCount).keys()].map((index) => (
-          <Box key={`box-${index}`} num={index + 1} />
+          <Box key={`box-${index}`} num={index + 1} callback={onBoxClick} />
         ))}
+      </div>
+
+      <div id="drawer-background" className="hide"></div>
+      <div id="drawer" className="hide">
+        <div className="drawer-header">
+          <h2>Box 1</h2>
+          <button
+            className="transparent"
+            onClick={() => {
+              document.getElementById('drawer').classList.add('hide');
+              document
+                .getElementById('drawer-background')
+                .classList.add('hide');
+            }}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import './Box.scss';
 
-export default function Box({ num }) {
+export default function Box({ num, callback }) {
   return (
-    <div className="box">
+    <button className="box" onClick={callback}>
       <p>{num}</p>
-    </div>
+    </button>
   );
 }
