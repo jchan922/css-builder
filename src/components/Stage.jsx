@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Box from './Box.jsx';
+import Drawer from './Drawer.jsx';
 import Fieldset from './Fieldset.jsx';
 
 import './Stage.scss';
@@ -27,23 +28,26 @@ export default function Stage() {
   const addBoxBtnClick = () => setBoxCount(boxCount + 1);
   const removeBoxBtnClick = () => boxCount > 1 && setBoxCount(boxCount - 1);
 
+  const [activeBox, setActiveBox] = useState(undefined);
   const onBoxClick = (e) => {
-    const elDrawer = document.getElementById('drawer');
-    const elDrawerBackground = document.getElementById('drawer-background');
+    // const elDrawer = document.getElementById('drawer');
+    // const elDrawerBackground = document.getElementById('drawer-background');
 
-    [elDrawerBackground, elDrawer].forEach((el) =>
-      el.classList.contains('hide')
-        ? el.classList.remove('hide')
-        : el.classList.add('hide')
-    );
+    // [elDrawerBackground, elDrawer].forEach((el) =>
+    //   el.classList.contains('hide')
+    //     ? el.classList.remove('hide')
+    //     : el.classList.add('hide')
+    // );
 
-    document.getElementById('drawer').contains('hide')
-      ? document.getElementById('stage').classList.add('no-pointer')
-      : document.getElementById('stage').classList.remove('no-pointer');
+    // document.getElementById('drawer').classList.contains('hide')
+    //   ? document.getElementById('stage').classList.add('no-pointer')
+    //   : document.getElementById('stage').classList.remove('no-pointer');
+
+    setActiveBox(e.currentTarget.innerText);
   };
 
   return (
-    <div id="stage">
+    <div id="stage" className={activeBox && 'no-pointer'}>
       <button id="add-box-btn" onClick={addBoxBtnClick}>
         Add box
       </button>
@@ -108,27 +112,33 @@ export default function Stage() {
         }}
       >
         {[...Array(boxCount).keys()].map((index) => (
-          <Box key={`box-${index}`} num={index + 1} callback={onBoxClick} />
+          <Box key={`box-${index}`} num={index + 1} onBoxClick={onBoxClick} />
         ))}
       </div>
 
-      <div id="drawer-background" className="hide"></div>
-      <div id="drawer" className="hide">
-        <div className="drawer-header">
-          <h2>Box 1</h2>
-          <button
-            className="transparent"
-            onClick={() => {
-              document.getElementById('drawer').classList.add('hide');
-              document
-                .getElementById('drawer-background')
-                .classList.add('hide');
-            }}
-          >
-            Close
-          </button>
-        </div>
-      </div>
+      <Drawer
+        header={activeBox ? `Box ${activeBox}` : 'Saving changes...'}
+        content={
+          activeBox
+            ? [
+                {
+                  key: 'order',
+                  element: (
+                    <form>
+                      <Fieldset
+                        callback={() => console.log('ORDER')}
+                        name="order"
+                        values={[...Array(boxCount).keys()]}
+                      />
+                    </form>
+                  ),
+                },
+              ]
+            : []
+        }
+        isOpen={Boolean(activeBox)}
+        onCloseClick={() => setActiveBox(undefined)}
+      ></Drawer>
     </div>
   );
 }
