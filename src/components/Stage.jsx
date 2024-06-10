@@ -25,25 +25,38 @@ export default function Stage() {
   };
 
   const [boxCount, setBoxCount] = useState(1);
-  const addBoxBtnClick = () => setBoxCount(boxCount + 1);
+  const addBoxBtnClick = () => boxCount < 10 && setBoxCount(boxCount + 1);
   const removeBoxBtnClick = () => boxCount > 1 && setBoxCount(boxCount - 1);
 
   const [activeBox, setActiveBox] = useState(undefined);
-  const onBoxClick = (e) => {
-    // const elDrawer = document.getElementById('drawer');
-    // const elDrawerBackground = document.getElementById('drawer-background');
+  const onBoxClick = (e) => setActiveBox(e.currentTarget.innerText);
 
-    // [elDrawerBackground, elDrawer].forEach((el) =>
-    //   el.classList.contains('hide')
-    //     ? el.classList.remove('hide')
-    //     : el.classList.add('hide')
-    // );
+  const [boxStyles, setBoxStyles] = useState({ 1: {} });
+  const onDrawerFormInputChange = (e) => {
+    const { name, value } = e.target;
+    const className = `${name}--${value}`;
 
-    // document.getElementById('drawer').classList.contains('hide')
-    //   ? document.getElementById('stage').classList.add('no-pointer')
-    //   : document.getElementById('stage').classList.remove('no-pointer');
+    setBoxStyles((prev) => {
+      return {
+        ...prev,
+        [activeBox]: {
+          ...prev?.[activeBox],
+          [name]: className,
+        },
+      };
+    });
+  };
 
-    setActiveBox(e.currentTarget.innerText);
+  const getBoxStyles = (boxNum) => {
+    const styles = boxStyles[boxNum];
+    let classNames = '';
+
+    for (const key in styles) {
+      const className = styles[key];
+      classNames = `${classNames ? `${classNames} ${className}` : className}`;
+    }
+
+    return classNames;
   };
 
   return (
@@ -92,6 +105,16 @@ export default function Stage() {
           ]}
         />
       </form>
+      <button
+        onClick={() => {
+          setSandboxStyles({});
+          setBoxCount(1);
+          setBoxStyles({ 1: {} });
+          setActiveBox(undefined);
+        }}
+      >
+        Reset
+      </button>
 
       <div id="info-box">
         <h2>Description</h2>
@@ -112,30 +135,74 @@ export default function Stage() {
         }}
       >
         {[...Array(boxCount).keys()].map((index) => (
-          <Box key={`box-${index}`} num={index + 1} onBoxClick={onBoxClick} />
+          <Box
+            className={getBoxStyles(index + 1)}
+            key={`box-${index + 1}`}
+            num={index + 1}
+            onBoxClick={onBoxClick}
+          />
         ))}
       </div>
 
       <Drawer
-        header={activeBox ? `Box ${activeBox}` : 'Saving changes...'}
         content={
           activeBox
             ? [
                 {
-                  key: 'order',
+                  key: 'form',
                   element: (
                     <form>
+                      {boxCount > 1 && (
+                        <Fieldset
+                          callback={onDrawerFormInputChange}
+                          name="order"
+                          values={[...Array(boxCount).keys()]}
+                        />
+                      )}
                       <Fieldset
-                        callback={() => console.log('ORDER')}
-                        name="order"
-                        values={[...Array(boxCount).keys()]}
+                        callback={onDrawerFormInputChange}
+                        name="flex-grow"
+                        values={[...Array(boxCount + 1).keys()]}
+                      />
+                      <Fieldset
+                        callback={onDrawerFormInputChange}
+                        name="flex-shrink"
+                        values={['1', '0']}
+                      />
+                      <Fieldset
+                        callback={onDrawerFormInputChange}
+                        name="flex-basis"
+                        values={[
+                          '200px',
+                          '4em',
+                          '50%',
+                          'auto',
+                          'content',
+                          'unset',
+                        ]}
                       />
                     </form>
+                  ),
+                },
+                {
+                  key: 'reset',
+                  element: (
+                    <button
+                      onClick={() =>
+                        setBoxStyles((prev) => ({
+                          ...prev,
+                          [activeBox]: {},
+                        }))
+                      }
+                    >
+                      Reset
+                    </button>
                   ),
                 },
               ]
             : []
         }
+        header={activeBox ? `Box ${activeBox}` : 'Saving changes...'}
         isOpen={Boolean(activeBox)}
         onCloseClick={() => setActiveBox(undefined)}
       ></Drawer>

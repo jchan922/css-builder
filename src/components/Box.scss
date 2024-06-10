@@ -15,3 +15,42 @@
     font-weight: 500;
   }
 }
+
+.order {
+  @for $i from 1 through 10 {
+    &--#{$i} {
+      order: #{$i};
+    }
+  }
+}
+
+.flex-grow {
+  @for $i from 1 through 10 {
+    &--#{$i} {
+      flex-grow: #{$i};
+    }
+  }
+}
+
+.flex-shrink {
+  @for $i from 10 through 0 {
+    &--#{$i} {
+      flex-shrink: #{$i};
+    }
+  }
+}
+
+.flex-basis {
+  &--200px {
+    flex-basis: 200px;
+  }
+  &--4em {
+    flex-basis: 10em;
+  }
+  &--auto {
+    flex-basis: auto;
+  }
+  &--unset {
+    flex-basis: unset;
+  }
+}

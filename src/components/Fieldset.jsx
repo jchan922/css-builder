@@ -5,7 +5,7 @@ export default function Fieldset({ name, values, callback }) {
     <>
       <fieldset>
         <legend>{name.toUpperCase()}</legend>
-        {values.map((value) => {
+        {values.map((value, index) => {
           return (
             <InputRadio
               callback={callback}
