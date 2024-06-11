@@ -1,8 +1,53 @@
----
-import Navigation from './Navigation.astro';
----
 <header>
+  <a id="logo" href="/">
+    CSS Builder
+  </a>
   <nav>
-    <Navigation />
+    <nav class="nav-links">
+      <a href="/flexbox">Flex Box</a>
+      <a href="/flexbox">Grid</a>
+    </nav>
   </nav>
+  <div>
+    <a href="/about">Login</a>
+    <a href="/help">Help</a>
+  </div>
 </header>
+
+<style lang="scss">
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1C1C24;
+    color: #FFFFFF;
+  }
+
+  #logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFFFFF;
+
+    &:hover {
+      color: #136EF5;
+    }
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.5rem;
+  }
+
+  .nav-links a:hover {
+    background-color: #555;
+  }
+</style>
