@@ -17,16 +17,15 @@ export default function Stage() {
       [name]: className,
     }));
   };
-  const getElSandboxClasses = (obj) => {
-    return Object.keys(obj)?.reduce(
-      (string, key) => `${string} ${obj[key]}`,
-      ''
-    );
-  };
+
+  const getElSandboxClasses = (obj) =>
+    Object.keys(obj)?.reduce((string, key) => `${string} ${obj[key]}`, '');
 
   const [boxCount, setBoxCount] = useState(1);
-  const addBoxBtnClick = () => boxCount < 10 && setBoxCount(boxCount + 1);
-  const removeBoxBtnClick = () => boxCount > 1 && setBoxCount(boxCount - 1);
+  const addBoxBtnClick = () =>
+    setBoxCount((prevCount) => (prevCount < 10 ? prevCount + 1 : prevCount));
+  const removeBoxBtnClick = () =>
+    setBoxCount((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
 
   const [activeBox, setActiveBox] = useState(undefined);
   const onBoxClick = (e) => setActiveBox(e.currentTarget.innerText);
@@ -36,17 +35,14 @@ export default function Stage() {
     const { name, value } = e.target;
     const className = `${name}--${value}`;
 
-    setBoxStyles((prev) => {
-      return {
-        ...prev,
-        [activeBox]: {
-          ...prev?.[activeBox],
-          [name]: className,
-        },
-      };
-    });
+    setBoxStyles((prev) => ({
+      ...prev,
+      [activeBox]: {
+        ...prev?.[activeBox],
+        [name]: className,
+      },
+    }));
   };
-
   const getBoxStyles = (boxNum) => {
     const styles = boxStyles[boxNum];
     let classNames = '';
@@ -116,13 +112,6 @@ export default function Stage() {
         Reset
       </button>
 
-      <div id="info-box">
-        <h2>Description</h2>
-        <p>
-          By default, <code>display: flex;</code> will position it's children
-          elements as a single row with content aligned to the left.
-        </p>
-      </div>
       <div
         id="sandbox"
         className={getElSandboxClasses(sandboxStyles)}
